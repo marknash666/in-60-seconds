@@ -7,8 +7,10 @@
 string name = "LAGC";//默认积分名称
 string symbol = "LAG";//默认积分代号
 uint256 totalSupply;//积分总量
+
 //记录账号持有积分数目的结构体(key为address，value为uint256)
 mapping (address => uint256) private balances;
+
 //定义了一个名为transferEvent的事件，该事件会被Web3.js监听并作出响应
 event transferEvent(address from, address to,uint256 value);
 ```
@@ -42,8 +44,9 @@ function _transfer(address _from,address _to,uint _value) internal{
         
         balances[_from] -= _value;//积分送出者积分减少
         balances[_to] += _value;//积分获得者积分增加
-        
+
         emit transferEvent(_from,_to,_value);//激活积分传递事件
+
         //假如传递执行后两个帐户的积分总额与此前不一则视为出现重大错误，回滚       
         assert(balances[_from]+balances[_to] == previousBalances);
     }
@@ -124,9 +127,9 @@ function setSale(uint256 new_sale) public onlyOwner(msg.sender){
 ```
 function _transfer(address _from,address _to,uint _value) internal{
         
-        require(!(_to == 0x0),"The address shouldn't be the burning address!");
-        require(balances[_from]>=_value,"No enough supply.");
-        require(balances[_to]+_value > balances[_to],"Expected a positive value of supply.");
+        require(!(_to == 0x0));
+        require(balances[_from]>=_value);
+        require(balances[_to]+_value > balances[_to]);
         
         uint previousBalances = balances[_from]+ balances[_to];
         if(msg.sender==contract_holder)//增加判断
