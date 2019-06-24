@@ -29,7 +29,7 @@ function getTotalSupply() view public returns (uint256){
         return totalSupply;//用于查看当前积分总量的函数
     }
 ```
-+++
+
 4. _transfer(internal的传递执行体)
 ```
 function _transfer(address _from,address _to,uint _value) internal{        
@@ -53,7 +53,7 @@ function transfer(address _to, uint256 _value) public {
         _transfer(msg.sender,_to,_value);//将调用者的地址并与其余两个参数传给实际执行体
     }
 ```
-+++
+
 6. balanceOf
 ```
  function balanceOf(address _owner) view public returns(uint256){
