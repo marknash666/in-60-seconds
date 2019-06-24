@@ -3,9 +3,26 @@
 ## 代码分析
 +++
 1.数据定义
+```
+string name = "LAGC";//默认积分名称
+string symbol = "LAG";//默认积分代号
+uint256 totalSupply;//积分总量
 
+//记录账号持有积分数目的结构体(key为address，value为uint256)
+mapping (address => uint256) private balances;
+
+//定义了一个名为transferEvent的事件，该事件会被Web3.js监听并作出响应
+event transferEvent(address from, address to,uint256 value);
+```
 2.构造函数
-
+```
+constructor (uint256 initialSupply, string creditName,string creditSymbol) public{
+        totalSupply =initialSupply;//初始化积分总量
+        balances[msg.sender]=totalSupply;//初始化合约持有者的积分数
+        name=creditName;//初始化积分名称
+        symbol=creditSymbol;//初始化积分代号        
+    }
+```
 +++
 3.getTotalSupply
 ```
@@ -52,7 +69,7 @@ function transfer(address _to, uint256 _value) public {
 +++
 ## 功能添加
 +++
-1. 积分总量增加</br>
+1.积分总量增加</br>
 **构思：积分总量的添加只能由合约持有者进行操作，因此考虑增加修饰函数和一个储存合约持有者地址的数据，在执行添加操作前判断是否为合约持有者**</br>
 +++
 **具体实现：**</br>
@@ -88,7 +105,7 @@ constructor (uint256 initialSupply, string creditName,string creditSymbol) publi
     }
 ```
 +++
-2. 允许商家进行积分发放活动</br>
+2.允许商家进行积分发放活动</br>
 **构思：积分优惠活动指的是商家可以在活动期间为前来消费的消费者发送更多的积分，优惠的设置只能被合约持有者操控**</br>
 +++
 **具体实现：**</br>
