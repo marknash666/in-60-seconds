@@ -1,4 +1,4 @@
-# LAGCredit合约阅读分析与功能添加
+## LAGCredit合约阅读分析与功能添加
 +++
 ## 代码分析
 +++
@@ -36,28 +36,32 @@ function _transfer(address _from,address _to,uint _value) internal{
         require(!(_to == 0x0));//防止积分被送进焚烧地址
         require(balances[_from]>=_value);//确保执行者拥有的积分大于传递的积分数值
         require(balances[_to]+_value > balances[_to]);//确保传递的积分数值大于0
-        
-        uint previousBalances = balances[_from]+ balances[_to];//记录传递执行前两个账户的积分总额
+
+        //记录传递执行前两个账户的积分总额
+        uint previousBalances = balances[_from]+ balances[_to];
         
         balances[_from] -= _value;//积分送出者积分减少
         balances[_to] += _value;//积分获得者积分增加
         
         emit transferEvent(_from,_to,_value);//激活积分传递事件
-        assert(balances[_from]+balances[_to] == previousBalances);//假如传递执行后两个帐户的积分总额与此前不一则出现重大错误，回滚        
+        //假如传递执行后两个帐户的积分总额与此前不一则视为出现重大错误，回滚       
+        assert(balances[_from]+balances[_to] == previousBalances);
     }
 ```
 +++
 5. transfer(封装了内部执行的积分传递函数)
 ```
 function transfer(address _to, uint256 _value) public {
-        _transfer(msg.sender,_to,_value);//将调用者的地址并与其余两个参数传给实际执行体
+        //将调用者的地址并与其余两个参数传给实际执行体
+        _transfer(msg.sender,_to,_value);
     }
 ```
 
 6. balanceOf
 ```
  function balanceOf(address _owner) view public returns(uint256){
-        return balances[_owner];//查看传入地址所拥有的积分数
+        //查看传入地址所拥有的积分数
+        return balances[_owner];
     }
 ```
 +++
@@ -72,8 +76,9 @@ function transfer(address _to, uint256 _value) public {
 ```
 address contract_holder;//储存合约持有者的地址
 
+//只能合约持有者进行操作的修饰函数
 modifier onlyOwner(address){
-        require(msg.sender==contract_holder);//只能合约持有者进行操作的修饰函数
+        require(msg.sender==contract_holder);
         _;
     }
 
