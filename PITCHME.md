@@ -2,27 +2,10 @@
 +++
 ## 代码分析
 +++
-### 1.数据定义6
-```
-string name = "LAGC";//默认积分名称
-string symbol = "LAG";//默认积分代号
-uint256 totalSupply;//积分总量
+1.数据定义
 
-//记录账号持有积分数目的结构体(key为address，value为uint256)
-mapping (address => uint256) private balances;
+2.构造函数
 
-//定义了一个名为transferEvent的事件，该事件会被Web3.js监听并作出响应
-event transferEvent(address from, address to,uint256 value);
-```
-### 2.构造函数
-```
-constructor (uint256 initialSupply, string creditName,string creditSymbol) public{
-        totalSupply =initialSupply;//初始化积分总量
-        balances[msg.sender]=totalSupply;//初始化合约持有者的积分数
-        name=creditName;//初始化积分名称
-        symbol=creditSymbol;//初始化积分代号        
-    }
-```
 +++
 3.getTotalSupply
 ```
