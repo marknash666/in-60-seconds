@@ -2,7 +2,7 @@
 +++
 ## 代码分析
 +++
-1. 数据定义6
+1.数据定义6
 ```
 string name = "LAGC";//默认积分名称
 string symbol = "LAG";//默认积分代号
@@ -14,7 +14,7 @@ mapping (address => uint256) private balances;
 //定义了一个名为transferEvent的事件，该事件会被Web3.js监听并作出响应
 event transferEvent(address from, address to,uint256 value);
 ```
-2. 构造函数
+2.构造函数
 ```
 constructor (uint256 initialSupply, string creditName,string creditSymbol) public{
         totalSupply =initialSupply;//初始化积分总量
@@ -24,14 +24,14 @@ constructor (uint256 initialSupply, string creditName,string creditSymbol) publi
     }
 ```
 +++
-3. getTotalSupply
+3.getTotalSupply
 ```
 function getTotalSupply() view public returns (uint256){
         return totalSupply;//用于查看当前积分总量的函数
     }
 ```
 
-4. _transfer(internal的传递执行体)
+4._transfer(internal的传递执行体)
 ```
 function _transfer(address _from,address _to,uint _value) internal{        
         require(!(_to == 0x0));//防止积分被送进焚烧地址
