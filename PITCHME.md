@@ -36,7 +36,8 @@ function getTotalSupply() view public returns (uint256){
 function _transfer(address _from,address _to,uint _value) internal{        
         require(!(_to == 0x0));//防止积分被送进焚烧地址
         require(balances[_from]>=_value);//确保执行者拥有的积分大于传递的积分数值
-        require(balances[_to]+_value > balances[_to]);//确保传递的积分数值大于0
+        //确保传递的积分数值大于0
+        require(balances[_to]+_value > balances[_to]);
 
         //记录传递执行前两个账户的积分总额
         uint previousBalances = balances[_from]+ balances[_to];
