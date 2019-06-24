@@ -14,7 +14,6 @@ mapping (address => uint256) private balances;
 //定义了一个名为transferEvent的事件，该事件会被Web3.js监听并作出响应
 event transferEvent(address from, address to,uint256 value);
 ```
-
 2. 构造函数
 ```
 constructor (uint256 initialSupply, string creditName,string creditSymbol) public{
